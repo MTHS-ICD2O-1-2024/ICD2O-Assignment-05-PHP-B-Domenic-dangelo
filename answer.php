@@ -29,28 +29,45 @@
     <main class="mdl-layout__content">
       <div class="right-image">
       <img src="./images/geometric-sequence.png" alt="geometric sequence" />
-        <form action="answer.php" method="GET">
-          <!-- Simple Textfield -->
-          <p>Enter number to multiply with the second number:</p>
-          <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="number" pattern="-?[0-9]*(\.[0-9]+)?" name="firstNumber" id="firstNumber" />
-            <label class="mdl-textfield__label" for="firstNumber">Number...</label>
-            <span class="mdl-textfield__error">Input is not a number!</span>
+      </div>
+      <div class="page-content-php">
+        <div id="user-info">
+          <?php
+          //input
+          $firstNumber = $_GET["firstNumber"];
+          $secondNumber = $_GET["secondNumber"];
+          $term = 5;
+          $resultSequence = "";
+          // process
+          for ($count = 0; $count < $term; $count++) {
+            $currentNumber = 1;
+
+            for ($counter = 0; $counter < $count; $counter++) {
+              $repeatedlyAdd = 0;
+              for ($loop = 0; $loop < $secondNumber; $loop++) {
+                $repeatedlyAdd += $currentNumber;
+              }
+              $currentNumber = $repeatedlyAdd;
+            }
+
+            $termValue = 0;
+            for ($repeatAdd = 0; $repeatAdd < $firstNumber; $repeatAdd++) {
+              $termValue += $currentNumber;
+            }
+
+            $resultSequence .= $termValue;
+            if ($count < $term - 1) {
+              $resultSequence .= ", ";
+            }
+          }
+
+          echo "Your geometric sequence is: " . $resultSequence . "<br>";
+
+          ?>
+          <div class="page-content-answer">
+            <a href="./index.php">Return</a>
           </div>
-          <br />
-          <p>Enter number to repeatedly multiply with the first number:</p>
-          <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="number" pattern="-?[0-9]*(\.[0-9]+)?" name="secondNumber" id="secondNumber" />
-            <label class="mdl-textfield__label" for="secondNumber">Number...</label>
-            <span class="mdl-textfield__error">Input is not a number!</span>
-          </div>
-          <br />
-          <!-- Accent-colored raised button with ripple -->
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            type="submit">
-            calculate
-          </button>
-        </form>
+        </div>
     </main>
   </div>
 </body>
